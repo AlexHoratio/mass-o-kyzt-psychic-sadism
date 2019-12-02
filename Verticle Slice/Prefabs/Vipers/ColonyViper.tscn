@@ -1,0 +1,141 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Verticle Slice/Prefabs/Vipers/Viper_WarBot.gd" type="Script" id=1]
+[ext_resource path="res://Verticle Slice/Graphics/Vipers/viper_warbot.png" type="Texture" id=2]
+[ext_resource path="res://Verticle Slice/Graphics/Vipers/shadow.png" type="Texture" id=3]
+[ext_resource path="res://Verticle Slice/Graphics/Vipers/warbot_head.png" type="Texture" id=4]
+[ext_resource path="res://Verticle Slice/Prefabs/Utilities/hitbox.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform bool enabled = true;
+
+void fragment() {
+	if(enabled){
+		COLOR = vec4(1, 1, 1, texture(TEXTURE, UV).a);
+	} else {
+		COLOR = texture(TEXTURE, UV);
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/enabled = false
+
+[sub_resource type="Animation" id=3]
+length = 0.6
+loop = true
+step = 0.13
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.13, 0.26, 0.39, 0.52 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.13, 0.26, 0.39, 0.52 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, -2 ), Vector2( 0, -2 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform bool enabled = true;
+
+void fragment() {
+	if(enabled){
+		COLOR = vec4(1, 1, 1, texture(TEXTURE, UV).a);
+	} else {
+		COLOR = texture(TEXTURE, UV);
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/enabled = false
+
+[sub_resource type="Animation" id=6]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 3, 1 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 10, 11 )
+
+[node name="ColonyViper" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+texture = ExtResource( 2 )
+hframes = 5
+frame = 4
+
+[node name="walk" type="AnimationPlayer" parent="Sprite"]
+playback_speed = 1.5
+anims/walk = SubResource( 3 )
+
+[node name="shadow" type="Sprite" parent="Sprite"]
+show_behind_parent = true
+position = Vector2( 0, 13 )
+texture = ExtResource( 3 )
+
+[node name="head" type="Sprite" parent="Sprite"]
+material = SubResource( 5 )
+texture = ExtResource( 4 )
+hframes = 6
+
+[node name="shoot" type="AnimationPlayer" parent="Sprite/head"]
+playback_speed = 1.5
+anims/shoot = SubResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 5 )
+shape = SubResource( 7 )
+
+[node name="hitbox" parent="." instance=ExtResource( 5 )]
+collision_shape = SubResource( 8 )
+hit_object = NodePath("..")
+
+[node name="hit_flash" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="shoot_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 0, 0 )
+[connection signal="animation_finished" from="Sprite/head/shoot" to="." method="_on_shoot_animation_finished"]
+[connection signal="timeout" from="hit_flash" to="." method="_on_hit_flash_timeout"]
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]

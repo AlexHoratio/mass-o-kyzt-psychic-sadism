@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pretending_to_converse.ogg-3e34790cff1cef0da62f981d5e71644b.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/pretending_to_converse.ogg"
+dest_files=[ "res://.import/pretending_to_converse.ogg-3e34790cff1cef0da62f981d5e71644b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

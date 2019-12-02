@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Verticle Slice/Graphics/Misc/white_circle.png" type="Texture" id=1]
+[ext_resource path="res://Verticle Slice/Prefabs/Environment/psychic_joint.gd" type="Script" id=2]
+
+[node name="psychic_joint" type="Sprite"]
+modulate = Color( 0.74902, 0.443137, 0.870588, 1 )
+z_index = 1
+texture = ExtResource( 1 )
+script = ExtResource( 2 )

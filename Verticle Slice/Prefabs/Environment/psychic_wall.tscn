@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Verticle Slice/Prefabs/Environment/psychic_wall.gd" type="Script" id=1]
+
+[node name="psychic_wall" type="Line2D" groups=[
+"psychic_walls",
+]]
+default_color = Color( 0.741176, 0.4, 1, 1 )
+texture_mode = 250005136
+joint_mode = 2
+script = ExtResource( 1 )

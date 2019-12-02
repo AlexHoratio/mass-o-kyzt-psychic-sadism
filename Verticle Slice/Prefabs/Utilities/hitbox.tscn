@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+
+export(Shape2D) var collision_shape
+export(NodePath) var hit_object
+export(String) var function_on_collide = \"kill\"
+
+var spent = false #only useful if you want this to be a one-time thing
+                  # for now, disabled!
+
+#add option for area2d scan or physicsbody scan
+
+func _ready() -> void:
+	$CollisionShape2D.shape = collision_shape
+ 
+func _on_hitbox_body_entered(body: PhysicsBody2D) -> void:
+	if not(spent) and body != get_node(hit_object) and body in get_tree().get_nodes_in_group(\"ally_bullets\"):
+		get_node(hit_object).call(function_on_collide)
+		body.die()
+		#spent = true
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if not(spent) and area != get_node(hit_object):
+		if area in get_tree().get_nodes_in_group(\"ally_bullets\") and not(get_node(hit_object) in get_tree().get_nodes_in_group(\"ColonyKyztlings\")):
+			get_node(hit_object).call(function_on_collide, area)
+			area.die()
+			#spent = true
+		elif area in get_tree().get_nodes_in_group(\"enemy_bullets\") and not(get_node(hit_object) in get_tree().get_nodes_in_group(\"ColonyVipers\")):
+			get_node(hit_object).call(function_on_collide, area)
+			area.die() "
+
+[node name="hitbox" type="Area2D"]
+script = SubResource( 1 )
+function_on_collide = "hit_by"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[connection signal="area_entered" from="." to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_hitbox_body_entered"]

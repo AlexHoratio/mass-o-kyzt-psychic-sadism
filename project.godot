@@ -1,0 +1,147 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Colony",
+"language": "GDScript",
+"path": "res://Verticle Slice/ColonyView.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "ColonyKyztling",
+"language": "GDScript",
+"path": "res://Verticle Slice/Prefabs/Kyztlings/ColonyKyztling.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "ColonyViper",
+"language": "GDScript",
+"path": "res://Verticle Slice/Prefabs/Vipers/ColonyViper.gd"
+}, {
+"base": "Node2D",
+"class": "KyztlingData",
+"language": "GDScript",
+"path": "res://Verticle Slice/Prefabs/Kyztlings/KyztlingData.gd"
+}, {
+"base": "Node",
+"class": "KyztlingDataContainer",
+"language": "GDScript",
+"path": "res://Verticle Slice/KyztlingDataContainer.gd"
+}, {
+"base": "Node2D",
+"class": "PsychicKyztling",
+"language": "GDScript",
+"path": "res://Verticle Slice/Prefabs/Kyztlings/PsychicKyztling.gd"
+}, {
+"base": "Node2D",
+"class": "PsychicViper",
+"language": "GDScript",
+"path": "res://Verticle Slice/Prefabs/Vipers/PsychicViper.gd"
+}, {
+"base": "Node2D",
+"class": "ViperData",
+"language": "GDScript",
+"path": "res://Verticle Slice/Prefabs/Vipers/ViperData.gd"
+}, {
+"base": "Node",
+"class": "ViperDataContainer",
+"language": "GDScript",
+"path": "res://Verticle Slice/ViperDataContainer.gd"
+} ]
+_global_script_class_icons={
+"Colony": "",
+"ColonyKyztling": "",
+"ColonyViper": "",
+"KyztlingData": "",
+"KyztlingDataContainer": "",
+"PsychicKyztling": "",
+"PsychicViper": "",
+"ViperData": "",
+"ViperDataContainer": ""
+}
+
+[application]
+
+config/name="Mass O' Kyzt - Psychic Sadism"
+run/main_scene="res://Verticle Slice/main.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+soft_noise="*res://soft_noise.gd"
+music_player="*res://Scripts/music_player.gd"
+hive="*res://Scripts/hive.gd"
+mouse_handler="*res://Scripts/mouse_handler.gd"
+
+[display]
+
+window/size/width=480
+window/size/height=270
+window/size/fullscreen=true
+window/size/test_width=1920
+window/size/test_height=1080
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[input]
+
+ui_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":14,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":12,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+ ]
+}
+dash={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
+ ]
+}
+scroll_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+scroll_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+shoot={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[rendering]
+
+quality/2d/use_pixel_snap=true
+environment/default_clear_color=Color( 0.145098, 0.54902, 0.478431, 1 )
+environment/default_environment="res://default_env.tres"

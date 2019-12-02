@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="kyztling_spawn_hint" type="Node2D" groups=[
+"kyztling_spawn_hint",
+]]

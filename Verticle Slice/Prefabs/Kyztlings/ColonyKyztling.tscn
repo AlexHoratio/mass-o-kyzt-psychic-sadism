@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Verticle Slice/Prefabs/Kyztlings/ColonyKyztling.gd" type="Script" id=1]
+[ext_resource path="res://Verticle Slice/Graphics/Kyztlings/default_kyztling.png" type="Texture" id=2]
+[ext_resource path="res://Verticle Slice/Graphics/Misc/poolshadow.png" type="Texture" id=3]
+[ext_resource path="res://Verticle Slice/Prefabs/Utilities/hitbox.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "walk"
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "shoot"
+length = 0.4
+step = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7, 8 ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 4, 1 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 4, 5 )
+
+[node name="ColonyKyztling" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+hframes = 9
+
+[node name="walk" type="AnimationPlayer" parent="Sprite"]
+playback_speed = 2.0
+anims/walk = SubResource( 1 )
+
+[node name="shoot" type="AnimationPlayer" parent="Sprite"]
+anims/shoot = SubResource( 2 )
+
+[node name="shadow" type="Sprite" parent="Sprite"]
+show_behind_parent = true
+position = Vector2( 1, 1 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 5 )
+shape = SubResource( 3 )
+
+[node name="wandering" type="Node" parent="."]
+
+[node name="wander" type="Timer" parent="wandering"]
+one_shot = true
+autostart = true
+
+[node name="stop_wandering" type="Timer" parent="wandering"]
+wait_time = 4.0
+one_shot = true
+
+[node name="bullet_origin" type="Position2D" parent="."]
+position = Vector2( 3, -6 )
+
+[node name="player_fx" type="Node2D" parent="."]
+
+[node name="hitbox" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1, 2 )
+collision_shape = SubResource( 4 )
+hit_object = NodePath("..")
+
+[node name="shoot_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="timeout" from="wandering/wander" to="." method="_on_wander_timeout"]
+[connection signal="timeout" from="wandering/stop_wandering" to="." method="_on_stop_wandering_timeout"]
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]

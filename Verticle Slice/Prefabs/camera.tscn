@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Camera2D
+
+var target_zoom = Vector2(1, 1)
+
+func _ready() -> void:
+	pass
+
+func _process(delta: float) -> void:
+	zoom = zoom.linear_interpolate(target_zoom, 0.1)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"scroll_up\"):
+		target_zoom /= 1.1
+	if event.is_action_pressed(\"scroll_down\"):
+		target_zoom *= 1.1
+		
+	target_zoom = Vector2(clamp(target_zoom.x, 1, 10), clamp(target_zoom.y, 1, 10))
+	
+	if target_zoom.x > 1:
+		get_node(\"CanvasLayer/zoom\").target_x = -40 + target_zoom.x * 40
+		var zoom_text = str(round(target_zoom.x*10)/10)
+		if zoom_text.length() < 2:
+			zoom_text += \".0\"
+		get_node(\"CanvasLayer/zoom\").text = \"x\" + zoom_text + \"!\"
+	else:
+		get_node(\"CanvasLayer/zoom\").target_x = -40"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+
+var target_x = 1
+
+func _ready() -> void:
+	pass
+
+func _process(delta: float) -> void:
+	rect_position.x = lerp(rect_position.x, target_x, 0.1)"
+
+[node name="Camera2D" type="Camera2D"]
+current = true
+smoothing_enabled = true
+script = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="zoom" type="Label" parent="CanvasLayer"]
+margin_left = -40.0
+margin_top = 238.0
+margin_bottom = 252.0
+text = "x1.0"
+script = SubResource( 2 )
