@@ -7,6 +7,7 @@
 radius = 15.0333
 
 [node name="joint" type="Sprite"]
+scale = Vector2( 2, 2 )
 z_index = 1
 texture = ExtResource( 1 )
 script = ExtResource( 2 )

@@ -5,7 +5,7 @@
 [ext_resource path="res://Verticle Slice/Graphics/Environment/Walls/rock_shadow.png" type="Texture" id=3]
 
 [node name="wall_segment" type="Line2D"]
-width = 64.0
+width = 128.0
 default_color = Color( 1, 1, 1, 1 )
 texture = ExtResource( 1 )
 texture_mode = 1
@@ -18,7 +18,7 @@ script = ExtResource( 2 )
 show_behind_parent = true
 position = Vector2( 4, 4 )
 z_index = -1
-width = 64.0
+width = 128.0
 default_color = Color( 1, 1, 1, 1 )
 texture = ExtResource( 3 )
 texture_mode = 1

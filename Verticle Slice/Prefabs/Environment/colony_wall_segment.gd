@@ -53,7 +53,7 @@ func explode():
 
 func generate_collision_shape():
 	var collision_polygon = PoolVector2Array()
-	var WIDTH = 16
+	var WIDTH = 32
 
 	# only one side
 	for i in range(points.size() - 1, -1, -1): #find the normal of each point

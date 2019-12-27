@@ -55,7 +55,7 @@ func generate_walls() -> void:
 func generate_roads() -> void:
 	var colony_path_generator = load("res://Verticle Slice/Prefabs/Environment/colony_path_generator.tscn").instance()
 	
-	
+	colony_path_generator.radius = colony_radius
 	
 	add_child(colony_path_generator)
 
