@@ -69,7 +69,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Mass O' Kyzt - Psychic Sadism"
-run/main_scene="res://Verticle Slice/main.tscn"
+run/main_scene="res://Scenes/main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -81,8 +81,8 @@ mouse_handler="*res://Scripts/mouse_handler.gd"
 
 [display]
 
-window/size/width=480
-window/size/height=270
+window/size/width=960
+window/size/height=540
 window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080

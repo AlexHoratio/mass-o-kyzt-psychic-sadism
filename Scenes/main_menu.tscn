@@ -1,0 +1,491 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Scenes/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/Props/flowers.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Graphics/logo.png" type="Texture" id=3]
+[ext_resource path="res://Graphics/subtitle.png" type="Texture" id=4]
+[ext_resource path="res://Graphics/shadow.png" type="Texture" id=5]
+[ext_resource path="res://Graphics/UI/MainMenu/panel.png" type="Texture" id=6]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Play/normal.png" type="Texture" id=7]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Play/click_mask.png" type="BitMap" id=8]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Play/shadow.png" type="Texture" id=9]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Help/normal.png" type="Texture" id=10]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Help/click_mask.png" type="BitMap" id=11]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Help/shadow.png" type="Texture" id=12]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Quit/normal.png" type="Texture" id=13]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Quit/click_mask.png" type="BitMap" id=14]
+[ext_resource path="res://Graphics/UI/MainMenu/Buttons/Quit/shadow.png" type="Texture" id=15]
+
+[sub_resource type="Animation" id=1]
+resource_name = "rotate"
+length = 2.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6, 1.2, 1.8 ),
+"transitions": PoolRealArray( 0.329877, 3.03143, 0.329877, 3.03143 ),
+"update": 0,
+"values": [ 0.0, 2.0, 0.0, -2.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 2, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0.8, 0.8 ), Vector2( 0.7, 0.7 ), Vector2( 0.8, 0.8 ) ]
+}
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends TextureButton
+
+var target_modulate = Color(1, 1, 1, 1)
+var target_position = 106
+var TIME = 0
+var time_direction = 1
+
+func _ready() -> void:
+	randomize()
+
+func _process(delta: float) -> void:
+	modulate = modulate.linear_interpolate(target_modulate, 0.1)
+	rect_position.y = lerp(rect_position.y, target_position, 0.1)
+	
+	TIME += delta*time_direction
+	if TIME > 2*PI:
+		TIME -= 2*PI
+		
+		if randi()%2 == 0:
+			time_direction *= -1
+			
+	$Sprite.position = Vector2(0, 3) + Vector2(1, 0).rotated(sin(TIME*4))
+
+func _on_play_pressed() -> void:
+	get_tree().change_scene(\"res://Scenes/In-Game/wildlands.tscn\")
+	# TODO:
+	#  do an animation and allow the player to select between continuing previous
+	#  colony encounter(if they were in one) or entering the wildlands
+
+func _on_play_mouse_entered() -> void:
+	target_modulate = Color(\"C87C7C\")
+	target_position = 100
+
+func _on_play_mouse_exited() -> void:
+	target_modulate = Color(\"FFFFFF\")
+	target_position = 106
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends TextureButton
+
+var target_modulate = Color(1, 1, 1, 1)
+var target_position = Vector2(22, 82)
+var TIME = 0
+var time_direction = 1
+
+func _ready() -> void:
+	randomize()
+	
+func _process(delta: float) -> void:
+	modulate = modulate.linear_interpolate(target_modulate, 0.1)
+	rect_position = rect_position.linear_interpolate(target_position, 0.1)
+	
+	TIME += delta*time_direction
+	if TIME > 2*PI:
+		TIME -= 2*PI
+		
+		if randi()%2 == 0:
+			time_direction *= -1
+			
+	$Sprite.position = Vector2(0, 3) + Vector2(1, 0).rotated(cos(TIME*4))
+
+func _on_help_pressed() -> void:
+	pass 
+	# TODO: 
+	#  create a help screen, maybe a tutorial, and link it here
+
+func _on_help_mouse_entered() -> void:
+	target_modulate = Color(\"C87C7C\")
+	target_position = Vector2(30, 76) # Vector2(22, 82) + Vector2(8, -6)
+
+func _on_help_mouse_exited() -> void:
+	target_modulate = Color(\"FFFFFF\")
+	target_position = Vector2(22, 82)
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends TextureButton
+
+var target_modulate = Color(1, 1, 1, 1)
+var target_position = Vector2(150, 79)
+var TIME = 0
+var time_direction = 1
+
+func _ready() -> void:
+	randomize()
+
+func _process(delta: float) -> void:
+	modulate = modulate.linear_interpolate(target_modulate, 0.1)
+	rect_position = rect_position.linear_interpolate(target_position, 0.1)
+	
+	TIME += delta*time_direction
+	
+	if TIME > 2*PI:
+		TIME -= 2*PI
+		if randi()%2 == 0:
+			time_direction = -1*time_direction
+	
+	$Sprite.position = Vector2(0, 3) + Vector2(1, 0).rotated(tan(TIME))
+
+func _on_quit_pressed() -> void:
+	# TODO: make an \"Are you sure?\" dialogue box with Yes/No options
+	get_tree().quit()
+
+func _on_quit_mouse_entered() -> void:
+	target_modulate = Color(\"C87C7C\")
+	target_position = Vector2(150, 79) + Vector2(-8, -6)
+	time_direction *= -1
+	
+func _on_quit_mouse_exited() -> void:
+	target_modulate = Color(\"FFFFFF\")
+	target_position = Vector2(150, 79)
+
+"
+
+[node name="main_menu" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="flowers" type="Node2D" parent="."]
+editor/display_folded = true
+
+[node name="flowers" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 456, 274 )
+rotation = 0.785397
+
+[node name="flowers6" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 66, 19 )
+rotation = 1.57079
+
+[node name="flowers12" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 212, 7 )
+rotation = 1.57079
+
+[node name="flowers20" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 426, 10 )
+rotation = 2.09439
+
+[node name="flowers26" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 727, 13 )
+rotation = 2.09439
+
+[node name="flowers29" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -74, 529 )
+rotation = 5.23598
+
+[node name="flowers40" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -187, 396 )
+rotation = 4.18878
+
+[node name="flowers43" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 860, 512 )
+rotation = 4.18878
+
+[node name="flowers49" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 858, 167 )
+rotation = 3.40339
+
+[node name="flowers55" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 858, 167 )
+rotation = 3.40339
+
+[node name="flowers16" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 345, -24 )
+rotation = 0.785397
+
+[node name="flowers19" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 559, -21 )
+rotation = 1.309
+
+[node name="flowers25" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 860, -18 )
+rotation = 1.309
+
+[node name="flowers32" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 59, 498 )
+rotation = 4.45058
+
+[node name="flowers36" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -54, 365 )
+rotation = 3.40339
+
+[node name="flowers44" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 993, 481 )
+rotation = 3.40339
+
+[node name="flowers50" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 991, 136 )
+rotation = 2.61799
+
+[node name="flowers56" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 991, 136 )
+rotation = 2.61799
+
+[node name="flowers2" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 435, 330 )
+rotation = 2.09439
+
+[node name="flowers5" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 45, 75 )
+rotation = 2.87979
+
+[node name="flowers11" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 191, 63 )
+rotation = 1.57079
+
+[node name="flowers15" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 324, 32 )
+rotation = 2.09439
+
+[node name="flowers18" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 538, 35 )
+rotation = 2.61799
+
+[node name="flowers28" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 839, 38 )
+rotation = 2.61799
+
+[node name="flowers31" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 38, 554 )
+rotation = 5.75958
+
+[node name="flowers39" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -75, 421 )
+rotation = 4.71238
+
+[node name="flowers41" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 972, 537 )
+rotation = 4.71238
+
+[node name="flowers47" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 970, 192 )
+rotation = 3.92699
+
+[node name="flowers53" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 970, 192 )
+rotation = 3.92699
+
+[node name="flowers3" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 501, 290 )
+rotation = 3.14159
+
+[node name="flowers7" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 111, 35 )
+rotation = 3.92699
+
+[node name="flowers9" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 257, 23 )
+rotation = 3.92699
+
+[node name="flowers17" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 471, 26 )
+rotation = 4.45058
+
+[node name="flowers24" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 772, 29 )
+rotation = 4.45058
+
+[node name="flowers34" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -29, 545 )
+rotation = 7.59217
+
+[node name="flowers37" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -142, 412 )
+rotation = 6.54498
+
+[node name="flowers46" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 905, 528 )
+rotation = 6.54498
+
+[node name="flowers52" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 903, 183 )
+rotation = 5.75958
+
+[node name="flowers58" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 903, 183 )
+rotation = 5.75958
+
+[node name="flowers13" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 390, -8 )
+rotation = 3.14159
+
+[node name="flowers22" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 604, -5 )
+rotation = 3.66519
+
+[node name="flowers23" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 905, -2 )
+rotation = 3.66519
+
+[node name="flowers33" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 104, 514 )
+rotation = 6.80677
+
+[node name="flowers35" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -9, 381 )
+rotation = 5.75958
+
+[node name="flowers42" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 1038, 497 )
+rotation = 5.75958
+
+[node name="flowers48" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 1036, 152 )
+rotation = 4.97418
+
+[node name="flowers54" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 1036, 152 )
+rotation = 4.97418
+
+[node name="flowers4" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 390, 255 )
+rotation = 3.92699
+
+[node name="flowers8" parent="flowers" instance=ExtResource( 2 )]
+rotation = 4.71238
+
+[node name="flowers10" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 146, -12 )
+rotation = 4.71238
+
+[node name="flowers14" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 279, -43 )
+rotation = 3.92699
+
+[node name="flowers21" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 493, -40 )
+rotation = 4.45058
+
+[node name="flowers27" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 794, -37 )
+rotation = 4.45058
+
+[node name="flowers30" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -7, 479 )
+rotation = 7.59217
+
+[node name="flowers38" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( -120, 346 )
+rotation = 6.54498
+
+[node name="flowers45" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 927, 462 )
+rotation = 6.54498
+
+[node name="flowers51" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 925, 117 )
+rotation = 5.75958
+
+[node name="flowers57" parent="flowers" instance=ExtResource( 2 )]
+position = Vector2( 925, 117 )
+rotation = 5.75958
+
+[node name="runners" type="Node2D" parent="."]
+
+[node name="logo" type="Sprite" parent="."]
+position = Vector2( 488, 111 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 3 )
+offset = Vector2( -2, 38 )
+
+[node name="subtitle" type="Sprite" parent="logo"]
+show_behind_parent = true
+position = Vector2( -2.33333, 32.6667 )
+rotation = 0.0330622
+scale = Vector2( 0.796558, 0.796558 )
+texture = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="logo/subtitle"]
+show_behind_parent = true
+position = Vector2( -0.353409, 3.0356 )
+texture = ExtResource( 5 )
+
+[node name="rotate" type="AnimationPlayer" parent="logo/subtitle"]
+autoplay = "rotate"
+playback_speed = 1.5
+anims/rotate = SubResource( 1 )
+
+[node name="pulse" type="AnimationPlayer" parent="logo/subtitle"]
+autoplay = "pulse"
+anims/pulse = SubResource( 2 )
+
+[node name="buttons" type="Sprite" parent="."]
+position = Vector2( 120, 135 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="play" type="TextureButton" parent="buttons"]
+margin_left = 94.0
+margin_top = 106.0
+margin_right = 146.0
+margin_bottom = 151.0
+texture_normal = ExtResource( 7 )
+texture_click_mask = ExtResource( 8 )
+script = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="buttons/play"]
+show_behind_parent = true
+position = Vector2( 0, 3 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="help" type="TextureButton" parent="buttons"]
+margin_left = 22.0
+margin_top = 82.0
+margin_right = 90.0
+margin_bottom = 135.0
+texture_normal = ExtResource( 10 )
+texture_click_mask = ExtResource( 11 )
+script = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="buttons/help"]
+show_behind_parent = true
+position = Vector2( 0, 3 )
+texture = ExtResource( 12 )
+centered = false
+
+[node name="quit" type="TextureButton" parent="buttons"]
+margin_left = 150.0
+margin_top = 79.0
+margin_right = 219.0
+margin_bottom = 133.0
+texture_normal = ExtResource( 13 )
+texture_click_mask = ExtResource( 14 )
+script = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="buttons/quit"]
+show_behind_parent = true
+position = Vector2( 0, 3 )
+texture = ExtResource( 15 )
+centered = false
+[connection signal="mouse_entered" from="buttons/play" to="buttons/play" method="_on_play_mouse_entered"]
+[connection signal="mouse_exited" from="buttons/play" to="buttons/play" method="_on_play_mouse_exited"]
+[connection signal="pressed" from="buttons/play" to="buttons/play" method="_on_play_pressed"]
+[connection signal="mouse_entered" from="buttons/help" to="buttons/help" method="_on_help_mouse_entered"]
+[connection signal="mouse_exited" from="buttons/help" to="buttons/help" method="_on_help_mouse_exited"]
+[connection signal="pressed" from="buttons/help" to="buttons/help" method="_on_help_pressed"]
+[connection signal="mouse_entered" from="buttons/quit" to="buttons/quit" method="_on_quit_mouse_entered"]
+[connection signal="mouse_exited" from="buttons/quit" to="buttons/quit" method="_on_quit_mouse_exited"]
+[connection signal="pressed" from="buttons/quit" to="buttons/quit" method="_on_quit_pressed"]

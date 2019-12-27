@@ -22,13 +22,13 @@ func _ready():
 	#AudioServer.set_bus_volume_db(music_bus, -60 + 60*data.get_value("Options", "music_volume", 100)/100)
 	stream = music_options["pretending_to_make"]
 	bus = "music"
-	play()
+	#play()
 	
 	dummy_player = AudioStreamPlayer.new()
 	dummy_player.bus = "music"
 	add_child(dummy_player)
 	
-	#mute()
+	mute()
 	
 func _process(delta):
 	if(fading):

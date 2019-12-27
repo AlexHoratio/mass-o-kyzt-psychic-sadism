@@ -3,6 +3,8 @@ extends Node
 var voice: KyztlingData = null
 var psychic_view_enabled = false
 
+var army_size = 5
+
 func _ready() -> void:
 	pass
 
