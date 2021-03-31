@@ -91,7 +91,6 @@ position = Vector2( 240, 135 )
 script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="YSort/player"]
-editor/display_folded = true
 texture = ExtResource( 1 )
 hframes = 5
 frame = 1

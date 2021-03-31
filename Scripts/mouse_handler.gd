@@ -7,6 +7,7 @@ onready var canvas_layer = CanvasLayer.new()
 
 func _ready() -> void:
 	add_child(canvas_layer)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 
 #func _input(event: InputEvent) -> void:
 #	if event is InputEventMouseButton:

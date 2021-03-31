@@ -4,12 +4,47 @@
 script/source = "extends Camera2D
 
 var target_zoom = Vector2(1, 1)
+var scroll_border_size = 5
+var scroll_speed = 750
+var target_position = Vector2(0, 0)
 
 func _ready() -> void:
-	pass
+	target_position = position
+	offset = -get_viewport_rect().size/2
+	
+	get_tree().set_meta(\"camera\", self) # one day move this out of player?
 
 func _process(delta: float) -> void:
 	zoom = zoom.linear_interpolate(target_zoom, 0.1)
+	offset = -zoom*get_viewport_rect().size/2
+		
+	if Input.is_action_pressed(\"center_camera\"):
+		var player_position = get_tree().get_meta(\"colony_voice\").position
+		position = position.linear_interpolate(player_position, 0.5)
+	else:
+		# USING GLOBAL COORDINATES 
+		var mouse_position = get_global_mouse_position()
+		var camera_position = global_position + offset # TOP LEFT CORNER 
+		var camera_size = -offset*2 # since offset is always -get_viewport_rect().size/2 @ _ready()
+		
+		if mouse_position.x < camera_position.x + scroll_border_size:
+			position.x -= scroll_speed*delta*zoom.x
+		if mouse_position.x > camera_size.x + camera_position.x - scroll_border_size:
+			position.x += scroll_speed*delta*zoom.x
+			
+		if mouse_position.y < camera_position.y + scroll_border_size:
+			position.y -= scroll_speed*delta*zoom.x
+		if mouse_position.y > camera_size.y + camera_position.y - scroll_border_size:
+			position.y += scroll_speed*delta*zoom.x
+		
+#	var mouse_position = get_local_mouse_position()
+#
+#	if mouse_position.x < 0 + scroll_border_size:
+#		target_position.x -= scroll_speed*delta
+#
+#	print(target_position)
+#
+#	position = position.linear_interpolate(target_position, 0.8)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(\"scroll_up\"):
@@ -40,8 +75,12 @@ func _process(delta: float) -> void:
 	rect_position.x = lerp(rect_position.x, target_x, 0.1)"
 
 [node name="Camera2D" type="Camera2D"]
+anchor_mode = 0
 current = true
-smoothing_enabled = true
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
 script = SubResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

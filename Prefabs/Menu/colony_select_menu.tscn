@@ -4,20 +4,19 @@
 [ext_resource path="res://Prefabs/Menu/panel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Graphics/Fonts/dpcomic.ttf" type="DynamicFontData" id=3]
 
+[sub_resource type="DynamicFont" id=1]
+size = 31
+font_data = ExtResource( 3 )
+
 [sub_resource type="DynamicFont" id=2]
 size = 31
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=4]
-size = 31
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 46
 font_data = ExtResource( 3 )
 
-[sub_resource type="Animation" id=1]
-resource_name = "slide_in"
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("panel:rect_position")
@@ -32,8 +31,7 @@ tracks/0/keys = {
 "values": [ Vector2( 313.5, 560 ), Vector2( 313.5, 109.5 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "slide_out"
+[sub_resource type="Animation" id=5]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("panel:rect_position")
@@ -65,7 +63,7 @@ mouse_filter = 0
 [node name="name" type="Label" parent="panel"]
 margin_right = 334.0
 margin_bottom = 91.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "COLONY NAME"
 align = 1
 valign = 1
@@ -75,7 +73,7 @@ margin_left = 86.5
 margin_top = 60.5
 margin_right = 242.5
 margin_bottom = 151.5
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.937255, 0.937255, 0.937255, 1 )
 text = "Occupied by The Kyzt!"
 align = 1
@@ -89,13 +87,13 @@ margin_left = 86.5
 margin_top = 180.5
 margin_right = 242.5
 margin_bottom = 260.5
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 text = "VISIT"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "slide_in"
-anims/slide_in = SubResource( 1 )
-anims/slide_out = SubResource( 3 )
+anims/slide_in = SubResource( 4 )
+anims/slide_out = SubResource( 5 )
 [connection signal="mouse_entered" from="panel" to="." method="_on_panel_mouse_entered"]
 [connection signal="mouse_exited" from="panel" to="." method="_on_panel_mouse_exited"]
 [connection signal="pressed" from="panel/visit" to="." method="_on_visit_pressed"]

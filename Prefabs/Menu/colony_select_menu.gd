@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 var mouse_hovering = false
+var target_colony = ""
 
 func _ready() -> void:
 	get_tree().get_meta("wildlands_player").flag_inhibited = true
@@ -23,4 +24,4 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 		queue_free()
 
 func _on_visit_pressed() -> void:
-	get_tree().change_scene("res://Scenes/In-Game/colony.tscn")
+	get_tree().change_scene(target_colony)

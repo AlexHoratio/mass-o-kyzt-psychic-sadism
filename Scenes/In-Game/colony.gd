@@ -1,12 +1,14 @@
 extends Node2D
 
 var kyztling_controlled = true
-var colony_radius = 1000
+var colony_radius = 1500
 
 #DEBUG
 var line_list = []
 var path_list = []
 var stickiness = 100
+
+# THIS SCENE SHOULD BE STATIC.
 
 func _ready() -> void:
 	generate_walls()
@@ -17,7 +19,8 @@ func _ready() -> void:
 	else:
 		generate_enslaved_kyztlings()
 		generate_vipers()
-		set_player_position()
+	
+	set_player_position()
 	
 func _process(delta: float) -> void:
 	update()
@@ -46,7 +49,7 @@ func generate_walls() -> void:
 	var angle_increment = 2*PI/number_of_vertices
 	
 	for i in range(number_of_vertices + 1):
-		vertices.append(Vector2(radius, 0).rotated(angle_increment*i))
+		vertices.append(Vector2(radius + 15*sin(2*PI*randf()), 0).rotated(angle_increment*i))
 		
 	var colony_wall = load("res://Verticle Slice/Prefabs/Environment/colony_wall.tscn").instance()
 	colony_wall.points = vertices
@@ -207,8 +210,16 @@ func generate_vipers() -> void:
 	
 # This should place the player at a random point around the walls of the Colony
 # Base it on which direction the player is coming from?
+# -----
+# There are usually three entry points to each colony. 
+# In future, snap the player to one of these entry points based on approaching direction
 func set_player_position() -> void:
-	pass 
+	var player = get_tree().get_meta("colony_voice")
+	var gate_spawners = get_tree().get_nodes_in_group("gate_spawners")
+	
+	var spawnpoint = gate_spawners[randi()%gate_spawners.size()].get_spawnpoint()
+	
+	player.position = spawnpoint
 
 func _on_VSlider_value_changed(value: float) -> void:
 	stickiness = value

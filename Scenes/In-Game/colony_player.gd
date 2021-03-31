@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
 var movement_vector = Vector2(0, 0)
-var speed = 100
+var speed = 100#
 
 func _ready() -> void:
-	pass
+	get_tree().set_meta("colony_voice", self)
 
 func _process(delta: float) -> void:
 	movement_vector = Vector2(0, 0)

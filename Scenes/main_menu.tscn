@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 	$Sprite.position = Vector2(0, 3) + Vector2(1, 0).rotated(sin(TIME*4))
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene(\"res://Scenes/In-Game/wildlands.tscn\")
+	get_tree().change_scene(\"res://Scenes/arena.tscn\")
 	# TODO:
 	#  do an animation and allow the player to select between continuing previous
 	#  colony encounter(if they were in one) or entering the wildlands
@@ -168,7 +168,6 @@ func _on_quit_mouse_exited() -> void:
 script = ExtResource( 1 )
 
 [node name="flowers" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="flowers" parent="flowers" instance=ExtResource( 2 )]
 position = Vector2( 456, 274 )
@@ -444,6 +443,9 @@ margin_bottom = 151.0
 texture_normal = ExtResource( 7 )
 texture_click_mask = ExtResource( 8 )
 script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="buttons/play"]
 show_behind_parent = true

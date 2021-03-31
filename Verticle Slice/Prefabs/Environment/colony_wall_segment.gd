@@ -14,6 +14,7 @@ var MAX_SHAKE = 5
 var UID = -1
 
 func _ready() -> void:
+	add_to_group("wall_segments")
 	randomize()
 	for i in range(points.size()):
 		offsets.append(Vector2(1, 0).rotated(2*randf()*PI))

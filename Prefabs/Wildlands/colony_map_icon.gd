@@ -1,6 +1,7 @@
 extends Node2D
 
 var colony_population = 25
+export var colony_id = 0 #default: random colony?
 
 func _ready() -> void:
 	$Sprite.material = $Sprite.material.duplicate()
@@ -25,6 +26,7 @@ func enter():
 	
 func spawn_menu():
 	var menu = load("res://Prefabs/Menu/colony_select_menu.tscn").instance()
+	menu.target_colony = "res://Scenes/In-Game/Colonies/" + str(colony_id) + ".tscn"
 	get_parent().add_child(menu)
 
 func _on_Button_pressed() -> void:
