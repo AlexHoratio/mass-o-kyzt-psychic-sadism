@@ -1,0 +1,389 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Beliefs/click_mask.bmp" type="BitMap" id=1]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Beliefs/glow.png" type="Texture" id=2]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Beliefs/text.png" type="Texture" id=3]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Stats/click_mask.bmp" type="BitMap" id=4]
+[ext_resource path="res://Scenes/PlanetKy/Wildlands/stats.gd" type="Script" id=5]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Stats/glow.png" type="Texture" id=6]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Stats/text.png" type="Texture" id=7]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Motivation/click_mask.bmp" type="BitMap" id=8]
+[ext_resource path="res://Scenes/PlanetKy/Wildlands/motivation.gd" type="Script" id=9]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Motivation/glow.png" type="Texture" id=10]
+[ext_resource path="res://Graphics/UI/PlanetKy/Buttons/Motivation/text.png" type="Texture" id=11]
+[ext_resource path="res://Graphics/PlanetKy/Wildlands/wildlands.png" type="Texture" id=12]
+[ext_resource path="res://Prefabs/PlanetKy/Environment/flowers.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Prefabs/player.gd" type="Script" id=14]
+[ext_resource path="res://Graphics/PlanetKy/Entities/Kyztlings/default_kyztling.png" type="Texture" id=15]
+[ext_resource path="res://Graphics/MISC/poolshadow.png" type="Texture" id=16]
+[ext_resource path="res://Prefabs/PlanetKy/Wildlands/colony_map_icon.tscn" type="PackedScene" id=17]
+
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureButton
+
+func _ready() -> void:
+	pass
+
+func _on_beliefs_pressed() -> void:
+	pass # TODO: open beliefs menu
+
+func _on_beliefs_mouse_entered() -> void:
+	$hover.play(\"move_up\")
+
+func _on_beliefs_mouse_exited() -> void:
+	$hover.play(\"move_down\")
+	$idle.stop()
+"
+
+[sub_resource type="Animation" id=2]
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 2, 0.5, 2, 0.5 ),
+"update": 0,
+"values": [ -5.0, 0.0, 5.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "move_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 69, 35 ), Vector2( 69, 45 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 69, 45 ), Vector2( 69, 35 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "move_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -10 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -10 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "move_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -10 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -10 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 419.012, 51.3796 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 8, 10 )
+
+[sub_resource type="Animation" id=11]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
+}
+
+[node name="wildlands" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="beliefs" type="TextureButton" parent="CanvasLayer"]
+margin_left = 350.0
+margin_top = 370.0
+margin_right = 487.0
+margin_bottom = 459.0
+rect_scale = Vector2( 2, 2 )
+texture_click_mask = ExtResource( 1 )
+script = SubResource( 1 )
+
+[node name="glow" type="Sprite" parent="CanvasLayer/beliefs"]
+show_behind_parent = true
+position = Vector2( 65, 45 )
+texture = ExtResource( 2 )
+
+[node name="text" type="Sprite" parent="CanvasLayer/beliefs"]
+position = Vector2( 69, 45 )
+texture = ExtResource( 3 )
+
+[node name="idle" type="AnimationPlayer" parent="CanvasLayer/beliefs"]
+autoplay = "wobble"
+anims/wobble = SubResource( 2 )
+
+[node name="hover" type="AnimationPlayer" parent="CanvasLayer/beliefs"]
+anims/move_down = SubResource( 3 )
+anims/move_up = SubResource( 4 )
+
+[node name="stats" type="TextureButton" parent="CanvasLayer"]
+margin_left = 640.0
+margin_top = 410.0
+margin_right = 764.0
+margin_bottom = 473.0
+rect_scale = Vector2( 2, 2 )
+texture_click_mask = ExtResource( 4 )
+script = ExtResource( 5 )
+
+[node name="glow" type="Sprite" parent="CanvasLayer/stats"]
+texture = ExtResource( 6 )
+centered = false
+
+[node name="text" type="Sprite" parent="CanvasLayer/stats"]
+position = Vector2( 0, -0.458665 )
+texture = ExtResource( 7 )
+centered = false
+
+[node name="hover" type="AnimationPlayer" parent="CanvasLayer/stats"]
+anims/move_down = SubResource( 5 )
+anims/move_up = SubResource( 6 )
+
+[node name="motivation" type="TextureButton" parent="CanvasLayer"]
+margin_left = 30.0
+margin_top = 350.0
+margin_right = 154.0
+margin_bottom = 413.0
+rect_scale = Vector2( 2, 2 )
+texture_click_mask = ExtResource( 8 )
+script = ExtResource( 9 )
+
+[node name="glow" type="Sprite" parent="CanvasLayer/motivation"]
+texture = ExtResource( 10 )
+centered = false
+
+[node name="text" type="Sprite" parent="CanvasLayer/motivation"]
+texture = ExtResource( 11 )
+centered = false
+
+[node name="hover" type="AnimationPlayer" parent="CanvasLayer/motivation"]
+anims/move_down = SubResource( 7 )
+anims/move_up = SubResource( 8 )
+
+[node name="mouse_guard" type="Area2D" parent="CanvasLayer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/mouse_guard"]
+position = Vector2( 450.966, 463.154 )
+shape = SubResource( 9 )
+
+[node name="bg" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+z_index = -5
+texture = ExtResource( 12 )
+centered = false
+
+[node name="flowers" type="Node2D" parent="."]
+
+[node name="flowers" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 304, 1636 )
+rotation = 0.523598
+
+[node name="flowers13" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 311, 1984 )
+rotation = 0.523598
+
+[node name="flowers2" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 417, 1598 )
+rotation = -1.0472
+
+[node name="flowers9" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 424, 1946 )
+rotation = -1.0472
+
+[node name="flowers3" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 270, 1519 )
+rotation = 0.523598
+
+[node name="flowers8" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 277, 1867 )
+rotation = 0.523598
+
+[node name="flowers4" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 319, 1563 )
+rotation = -0.785397
+
+[node name="flowers14" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 326, 1911 )
+rotation = -0.785397
+
+[node name="flowers5" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 449, 1556 )
+rotation = -0.542981
+
+[node name="flowers12" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 456, 1904 )
+rotation = -0.523598
+
+[node name="flowers6" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 525, 1566 )
+rotation = -1.309
+
+[node name="flowers10" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 532, 1914 )
+rotation = -1.309
+
+[node name="flowers7" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 574, 1500 )
+rotation = -1.309
+
+[node name="flowers19" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 365, 1490 )
+rotation = -1.309
+
+[node name="flowers11" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 395, 2011 )
+rotation = -1.309
+
+[node name="flowers18" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 186, 2001 )
+rotation = -1.309
+
+[node name="flowers15" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 268, 1730 )
+rotation = -0.523598
+
+[node name="flowers20" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 59.0001, 1720 )
+rotation = -0.523598
+
+[node name="flowers16" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 209, 1812 )
+rotation = 1.83259
+
+[node name="flowers17" parent="flowers" instance=ExtResource( 13 )]
+position = Vector2( 0, 1802 )
+rotation = 1.83259
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="followers" type="Node2D" parent="YSort"]
+
+[node name="citizens" type="Node2D" parent="YSort"]
+
+[node name="player" type="KinematicBody2D" parent="YSort"]
+position = Vector2( 351, 1733 )
+script = ExtResource( 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/player"]
+position = Vector2( 2, 2 )
+shape = SubResource( 10 )
+
+[node name="Sprite" type="Sprite" parent="YSort/player"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
+hframes = 9
+
+[node name="walk" type="AnimationPlayer" parent="YSort/player/Sprite"]
+anims/walk = SubResource( 11 )
+
+[node name="shadow" type="Sprite" parent="YSort/player/Sprite"]
+show_behind_parent = true
+position = Vector2( 1, 1 )
+texture = ExtResource( 16 )
+
+[node name="Camera2D" type="Camera2D" parent="YSort/player"]
+current = true
+smoothing_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+
+[node name="colony_map_icon" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( 525, 1757 )
+colony_id = 1
+
+[node name="colony_map_icon2" parent="YSort" instance=ExtResource( 17 )]
+position = Vector2( 1320, 1760 )
+colony_id = 2
+[connection signal="mouse_entered" from="CanvasLayer/beliefs" to="CanvasLayer/beliefs" method="_on_beliefs_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/beliefs" to="CanvasLayer/beliefs" method="_on_beliefs_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/beliefs" to="CanvasLayer/beliefs" method="_on_beliefs_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/stats" to="CanvasLayer/stats" method="_on_stats_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/stats" to="CanvasLayer/stats" method="_on_stats_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/stats" to="CanvasLayer/stats" method="_on_stats_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/motivation" to="CanvasLayer/motivation" method="_on_stats_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/motivation" to="CanvasLayer/motivation" method="_on_stats_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/motivation" to="CanvasLayer/motivation" method="_on_stats_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/mouse_guard" to="YSort/player" method="_on_mouse_guard_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/mouse_guard" to="YSort/player" method="_on_mouse_guard_mouse_exited"]

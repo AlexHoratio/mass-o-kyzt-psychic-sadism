@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/click_mask.bmp-a5ddc1c7c3f084a7988b15f618005b8d.res"
+
+[deps]
+
+source_file="res://Graphics/UI/PlanetKy/Buttons/Stats/click_mask.bmp"
+dest_files=[ "res://.import/click_mask.bmp-a5ddc1c7c3f084a7988b15f618005b8d.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5

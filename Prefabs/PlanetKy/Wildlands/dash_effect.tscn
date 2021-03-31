@@ -1,0 +1,136 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Graphics/MISC/nonrandom_noise.png" type="Texture" id=1]
+[ext_resource path="res://Graphics/PlanetKy/Entities/Kyztlings/silhouette_white.png" type="Texture" id=2]
+
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+var point_timer = 0
+var finishing = false
+
+func _ready() -> void:
+	pass
+
+func _process(delta: float) -> void:
+	point_timer += delta
+	if point_timer > 0.02 and not(finishing):
+		point_timer -= 0.02
+		get_node(\"Node/Line2D\").add_point(global_position)
+		
+	if get_node(\"Node/Line2D\").get_point_count() > 100:
+		get_node(\"Node/Line2D\").remove_point(0)
+		
+	if finishing:
+		get_node(\"Node/Line2D\").remove_point(0)
+		
+		if get_node(\"Node/Line2D\").get_point_count() < 2:
+			set_process(false)
+
+func _on_wrap_up_timeout() -> void:
+	finishing = true
+	$Particles2D.emitting = false
+
+func _on_Timer_timeout() -> void:
+	queue_free()
+"
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise: hint_white;
+
+void fragment(){ 
+	float speed_factor = TIME / 5.0;
+
+	float thickness_factor = (1.0 - pow(COLOR.a, 2));
+
+	vec2 fake_UV = vec2(abs(0.5 - UV.y) * thickness_factor, COLOR.a + speed_factor);
+
+	vec4 n = texture(noise, fake_UV);
+
+	float grey = 1.0 - (0.2126 * n.r + 0.7152 * n.g + 0.0722 * n.b);
+
+	if (grey < 0.55) { COLOR.a = COLOR.a * pow(grey, 2); }
+
+	if(grey < 0.5){discard;} 
+
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/noise = ExtResource( 1 )
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.172185, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0.945098, 0.968627, 0 )
+
+[sub_resource type="Curve" id=10]
+min_value = -360.0
+max_value = 360.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 137.808 ), 724.81, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.318519, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.807407, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.750995, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 5.0
+angular_velocity_random = 1.0
+angular_velocity_curve = SubResource( 11 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 5.0
+angle = 720.0
+angle_random = 1.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+
+[node name="dash_effect" type="Node2D"]
+show_behind_parent = true
+script = SubResource( 1 )
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Line2D" type="Line2D" parent="Node"]
+show_behind_parent = true
+material = SubResource( 4 )
+default_color = Color( 0.921569, 0.933333, 1, 1 )
+gradient = SubResource( 2 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="wrap_up" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="Particles2D" type="Particles2D" parent="."]
+show_behind_parent = true
+amount = 6
+local_coords = false
+process_material = SubResource( 5 )
+texture = ExtResource( 2 )
+
+[node name="die" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+[connection signal="timeout" from="wrap_up" to="." method="_on_wrap_up_timeout"]
+[connection signal="timeout" from="die" to="." method="_on_Timer_timeout"]

@@ -12,47 +12,47 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Colony",
 "language": "GDScript",
-"path": "res://Verticle Slice/ColonyView.gd"
+"path": "res://Prefabs/CODE/ColonyView.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "ColonyKyztling",
 "language": "GDScript",
-"path": "res://Verticle Slice/Prefabs/Kyztlings/ColonyKyztling.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Kyztling/ColonyKyztling.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "ColonyViper",
 "language": "GDScript",
-"path": "res://Verticle Slice/Prefabs/Vipers/ColonyViper.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Vipers/ColonyViper.gd"
 }, {
 "base": "Node2D",
 "class": "KyztlingData",
 "language": "GDScript",
-"path": "res://Verticle Slice/Prefabs/Kyztlings/KyztlingData.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Kyztling/KyztlingData.gd"
 }, {
 "base": "Node",
 "class": "KyztlingDataContainer",
 "language": "GDScript",
-"path": "res://Verticle Slice/KyztlingDataContainer.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Kyztling/KyztlingDataContainer.gd"
 }, {
 "base": "Node2D",
 "class": "PsychicKyztling",
 "language": "GDScript",
-"path": "res://Verticle Slice/Prefabs/Kyztlings/PsychicKyztling.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Kyztling/PsychicKyztling.gd"
 }, {
 "base": "Node2D",
 "class": "PsychicViper",
 "language": "GDScript",
-"path": "res://Verticle Slice/Prefabs/Vipers/PsychicViper.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Vipers/PsychicViper.gd"
 }, {
 "base": "Node2D",
 "class": "ViperData",
 "language": "GDScript",
-"path": "res://Verticle Slice/Prefabs/Vipers/ViperData.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Vipers/ViperData.gd"
 }, {
 "base": "Node",
 "class": "ViperDataContainer",
 "language": "GDScript",
-"path": "res://Verticle Slice/ViperDataContainer.gd"
+"path": "res://Prefabs/PlanetKy/Entities/Vipers/ViperDataContainer.gd"
 } ]
 _global_script_class_icons={
 "Colony": "",

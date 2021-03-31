@@ -1,10 +1,10 @@
 [gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/main_menu.gd" type="Script" id=1]
-[ext_resource path="res://Prefabs/Props/flowers.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Graphics/logo.png" type="Texture" id=3]
-[ext_resource path="res://Graphics/subtitle.png" type="Texture" id=4]
-[ext_resource path="res://Graphics/shadow.png" type="Texture" id=5]
+[ext_resource path="res://Prefabs/PlanetKy/Environment/flowers.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Graphics/UI/Logos/logo.png" type="Texture" id=3]
+[ext_resource path="res://Graphics/UI/Logos/subtitle.png" type="Texture" id=4]
+[ext_resource path="res://Graphics/UI/Logos/shadow.png" type="Texture" id=5]
 [ext_resource path="res://Graphics/UI/MainMenu/panel.png" type="Texture" id=6]
 [ext_resource path="res://Graphics/UI/MainMenu/Buttons/Play/normal.png" type="Texture" id=7]
 [ext_resource path="res://Graphics/UI/MainMenu/Buttons/Play/click_mask.png" type="BitMap" id=8]
@@ -80,7 +80,7 @@ func _on_play_pressed() -> void:
 
 func _on_play_mouse_entered() -> void:
 	target_modulate = Color(\"C87C7C\")
-	target_position = 100
+	target_position = 104
 
 func _on_play_mouse_exited() -> void:
 	target_modulate = Color(\"FFFFFF\")
@@ -118,7 +118,7 @@ func _on_help_pressed() -> void:
 
 func _on_help_mouse_entered() -> void:
 	target_modulate = Color(\"C87C7C\")
-	target_position = Vector2(30, 76) # Vector2(22, 82) + Vector2(8, -6)
+	target_position = Vector2(24, 80) # Vector2(22, 82) + Vector2(8, -6)
 
 func _on_help_mouse_exited() -> void:
 	target_modulate = Color(\"FFFFFF\")
@@ -141,21 +141,21 @@ func _process(delta: float) -> void:
 	rect_position = rect_position.linear_interpolate(target_position, 0.1)
 	
 	TIME += delta*time_direction
-	
 	if TIME > 2*PI:
 		TIME -= 2*PI
+		
 		if randi()%2 == 0:
-			time_direction = -1*time_direction
+			time_direction *= -1
 	
 	$Sprite.position = Vector2(0, 3) + Vector2(1, 0).rotated(tan(TIME))
 
 func _on_quit_pressed() -> void:
-	# TODO: make an \"Are you sure?\" dialogue box with Yes/No options
 	get_tree().quit()
+	# TODO: make an \"Are you sure?\" dialogue box with Yes/No options
 
 func _on_quit_mouse_entered() -> void:
 	target_modulate = Color(\"C87C7C\")
-	target_position = Vector2(150, 79) + Vector2(-8, -6)
+	target_position = Vector2(150, 79) + Vector2(-2, -2)
 	time_direction *= -1
 	
 func _on_quit_mouse_exited() -> void:

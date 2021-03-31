@@ -10,7 +10,7 @@ func _process(delta: float) -> void:
 		generate_runner()
 		
 func generate_runner() -> void:
-	var runner = load("res://Prefabs/Menu/runner.tscn").instance()
+	var runner = load("res://Prefabs/UI/Menu/runner.tscn").instance()
 	
 	var spawnpoint = Vector2(0, 0)
 	

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Graphics/PlanetKy/Environment/Walls/rocks.png" type="Texture" id=1]
+[ext_resource path="res://Prefabs/PlanetKy/Wildlands/colony_wall_segment.gd" type="Script" id=2]
+[ext_resource path="res://Graphics/PlanetKy/Environment/Walls/rock_shadow.png" type="Texture" id=3]
+
+
+[node name="wall_segment" type="Line2D"]
+width = 128.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 1
+sharp_limit = 1.0
+round_precision = 16
+script = ExtResource( 2 )
+
+[node name="shadow" type="Line2D" parent="."]
+show_behind_parent = true
+position = Vector2( 4, 4 )
+z_index = -1
+width = 128.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 3 )
+texture_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=[
+"walls",
+]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
