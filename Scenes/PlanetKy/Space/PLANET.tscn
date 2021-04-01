@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/PlanetKy/Space/PLANETCamera.gd" type="Script" id=1]
 
@@ -16,6 +16,8 @@ subsurf_scatter_strength = 1.0
 transmission_enabled = true
 transmission = Color( 0.14902, 0.145098, 0.145098, 1 )
 
+[sub_resource type="CapsuleMesh" id=6]
+
 [sub_resource type="ProceduralSky" id=4]
 sky_top_color = Color( 0, 0.0509804, 0.0784314, 1 )
 sky_horizon_color = Color( 0, 0.0666667, 0.117647, 1 )
@@ -23,7 +25,7 @@ ground_bottom_color = Color( 0, 0.0509804, 0.0784314, 1 )
 ground_horizon_color = Color( 0, 0.0666667, 0.117647, 1 )
 sun_color = Color( 0.968627, 0.831373, 0.831373, 1 )
 sun_latitude = 90.0
-sun_curve = 0.0277392
+sun_curve = 0.0435276
 sun_energy = 1.78
 
 [sub_resource type="Environment" id=5]
@@ -41,6 +43,16 @@ environment = SubResource( 1 )
 [node name="Planet" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
+
+[node name="north" type="MeshInstance" parent="Planet"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="south" type="MeshInstance" parent="Planet"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -62.6246, 0 )
+mesh = SubResource( 6 )
+material/0 = null
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 
