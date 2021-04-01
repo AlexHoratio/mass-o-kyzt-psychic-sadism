@@ -37,8 +37,11 @@ func _process(delta: float) -> void:
 			movement_vector.x += 1
 		
 		transform = transform.rotated(Vector3(0, 1, 0), delta*movement_vector.x)
-		transform = transform.rotated(transform.basis.x, delta*movement_vector.y)
+		var new_vertical_transform = transform.rotated(transform.basis.x, delta*movement_vector.y)
 		
+		# Boundary check... no longer flickers horribly scrolling past poles
+		if abs(new_vertical_transform.basis.get_euler().x * 180/PI) < 89.9:
+			transform = new_vertical_transform
 		transform = transform.looking_at(Vector3.ZERO, Vector3.UP)
 		
 	if orbiting:
