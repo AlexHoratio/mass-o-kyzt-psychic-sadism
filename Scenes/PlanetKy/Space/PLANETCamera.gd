@@ -6,7 +6,7 @@ var look_speed = 0.005
 var move_speed = 0.1
 
 var angle_theta = 0
-var radius = 100
+var radius = 130
 var orbit_speed = 0.2
 
 var mouselook_enabled = false
@@ -35,7 +35,8 @@ func _process(delta: float) -> void:
 		var _2d_origin = Vector2(radius, 0).rotated(angle_theta)
 		transform.origin = Vector3(_2d_origin.x, 0, _2d_origin.y) 
 		
-		transform = transform.looking_at(Vector3(0, 0, 0), Vector3.UP)
+		var adjusted_target = Vector2(radius, 0).rotated(_2d_origin.angle_to_point(Vector2(0, 0)) + PI*1.0)
+		transform = transform.looking_at(Vector3(adjusted_target.x, 0, adjusted_target.y), Vector3.UP)
 		
 	if !mouselook_enabled:
 		return
