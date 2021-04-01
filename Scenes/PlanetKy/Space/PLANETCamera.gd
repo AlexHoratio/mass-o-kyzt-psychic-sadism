@@ -13,6 +13,7 @@ var mouselook_enabled = false
 var orbiting = true
 var terrainscroll_mode = false
 var terrainscroll_radius = 150
+var chord_length = 10
 var terrainscroll_speed = 1
 var landing = false
 
@@ -38,11 +39,14 @@ func _process(delta: float) -> void:
 		if Input.is_action_pressed("d"):
 			movement_vector.x += 1
 			
-		terrainscroll_speed = (terrainscroll_radius - 46)/100.0
+		terrainscroll_speed = (terrainscroll_radius)/100.0
 		
-		transform = transform.rotated(Vector3(0, 1, 0), delta*movement_vector.x * max(terrainscroll_speed, 1.0))
-		var new_vertical_transform = transform.rotated(transform.basis.x, delta*movement_vector.y * terrainscroll_speed)
+		var x_gamma = min(2*asin((chord_length * pow(terrainscroll_speed, 2))/(2*50*sin(transform.basis.get_euler().x + PI/2))), PI)
+		transform = transform.rotated(Vector3(0, 1, 0), delta*movement_vector.x*x_gamma)
 		
+		var y_gamma = 2*asin(clamp((chord_length * pow(terrainscroll_speed, 2))/(2*50), -1, 1))
+		print(y_gamma)
+		var new_vertical_transform = transform.rotated(transform.basis.x, delta*movement_vector.y * y_gamma)
 		# Boundary check... no longer flickers horribly scrolling past poles
 		if abs(new_vertical_transform.basis.get_euler().x * 180/PI) < 89:
 			transform = new_vertical_transform
@@ -130,4 +134,4 @@ func _input(event: InputEvent) -> void:
 		if event.button_index == BUTTON_WHEEL_UP:
 			terrainscroll_radius = max(51, 51 + ((terrainscroll_radius - 51) * 0.9))
 		elif event.button_index == BUTTON_WHEEL_DOWN:
-			terrainscroll_radius = min(151, terrainscroll_radius * 1.1)
+			terrainscroll_radius = min(151, terrainscroll_radius * 1.05)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/PlanetKy/Space/PLANETCamera.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/PlanetKy/Entities/Kyztlings/default_kyztling.png" type="Texture" id=2]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -17,6 +18,17 @@ transmission_enabled = true
 transmission = Color( 0.14902, 0.145098, 0.145098, 1 )
 
 [sub_resource type="CapsuleMesh" id=6]
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends Spatial
+
+class SurfaceObject:
+	var surface_position: Vector2
+	
+
+func _ready() -> void:
+	pass
+"
 
 [sub_resource type="ProceduralSky" id=4]
 sky_top_color = Color( 0, 0.0509804, 0.0784314, 1 )
@@ -53,6 +65,14 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -62.6246, 0 )
 mesh = SubResource( 6 )
 material/0 = null
+
+[node name="Surface" type="Spatial" parent="Planet"]
+script = SubResource( 7 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Planet/Surface"]
+transform = Transform( 1, 0, 0, 0, 0.99504, -0.0994761, 0, 0.0994761, 0.99504, 0, 0, 50.0003 )
+texture = ExtResource( 2 )
+hframes = 9
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 
