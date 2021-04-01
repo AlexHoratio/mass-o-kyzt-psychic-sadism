@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 	$Sprite.position = Vector2(0, 3) + Vector2(1, 0).rotated(sin(TIME*4))
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene(\"res://Scenes/arena.tscn\")
+	get_tree().change_scene(\"res://Scenes/PlanetKy/Space/PLANET.tscn\")
 	# TODO:
 	#  do an animation and allow the player to select between continuing previous
 	#  colony encounter(if they were in one) or entering the wildlands

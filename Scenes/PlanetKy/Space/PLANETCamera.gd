@@ -5,10 +5,19 @@ var resetting_transform = false
 var look_speed = 0.005
 var move_speed = 0.1
 
+var angle_theta = 0
+var radius = 100
+var orbit_speed = 0.2
+
+var mouselook_enabled = false
+var orbiting = true
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
 	starter_transform = transform
+	
+#	radius = Vector2(transform.origin.x, transform.origin.z).length() overriding...
+	angle_theta = Vector2(transform.origin.x, transform.origin.y).angle()
 
 func _process(delta: float) -> void:
 	
@@ -18,6 +27,17 @@ func _process(delta: float) -> void:
 		if (transform.origin.distance_to(starter_transform.origin) < 0.1):
 			resetting_transform = false
 		
+		return
+		
+	if orbiting:
+		angle_theta += delta*orbit_speed
+		
+		var _2d_origin = Vector2(radius, 0).rotated(angle_theta)
+		transform.origin = Vector3(_2d_origin.x, 0, _2d_origin.y) 
+		
+		transform = transform.looking_at(Vector3(0, 0, 0), Vector3.UP)
+		
+	if !mouselook_enabled:
 		return
 		
 	if Input.is_action_pressed("shift"):
@@ -59,6 +79,6 @@ func _process(delta: float) -> void:
 		resetting_transform = true
 		
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion && mouselook_enabled:
 		var mouse_look = Vector3(-event.relative.y, -event.relative.x, 0).normalized()
 		rotate_object_local(mouse_look, event.relative.length() * look_speed)
